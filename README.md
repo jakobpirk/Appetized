@@ -9,7 +9,7 @@ Marketing site til app-udviklingsbureauet Appetized med automatisk deploy til Fi
 4. (Valgfrit) Tilføj `FIREBASE_PROJECT_ID` secret, hvis du ikke vil committe projekt-id i `.firebaserc`.
 5. Ved push til `main` deployer workflowet automatisk til Firebase Hosting.
 
-## Lokal udvikling
+## Lokal udviklings
 ```bash
 # start en simpel server
 python -m http.server 3000 --directory public
