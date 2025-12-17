@@ -22,11 +22,12 @@ jobs:
 
       - name: Deploy to Firebase Hosting
         env:
-          PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID || '' }}
+          PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
         run: |
-          if [ -n "$PROJECT_ID" ]; then
-            firebase use "$PROJECT_ID"
-            firebase deploy --only hosting --project "$PROJECT_ID"
-          else
-            firebase deploy --only hosting
+          if [ -z "$PROJECT_ID" ]; then
+            echo "::error::Missing Firebase project id. Set the FIREBASE_PROJECT_ID secret in GitHub with your Firebase Hosting project id."
+            exit 1
           fi
+
+          firebase use "$PROJECT_ID"
+          firebase deploy --only hosting --project "$PROJECT_ID"
