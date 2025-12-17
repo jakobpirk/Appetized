@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Appetized | App-udvikling med fart</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="hero">
+    <div class="container hero__content">
+      <div>
+        <p class="eyebrow">App-udvikling • Design • Skalering</p>
+        <h1>Bygget til startups og scaleups</h1>
+        <p class="lede">
+          Appetized hjælper ambitiøse teams med at lancere og optimere apps, der bliver brugt og elsket. Vi leverer hele
+          rejsen – fra produktstrategi til driftssikker release i App Store og Google Play.
+        </p>
+        <div class="actions">
+          <a class="btn btn--primary" href="#contact">Book et møde</a>
+          <a class="btn btn--ghost" href="#services">Se vores services</a>
+        </div>
+        <div class="pill-group">
+          <span>Swift &amp; Kotlin</span>
+          <span>Flutter &amp; React Native</span>
+          <span>Firebase &amp; Supabase</span>
+        </div>
+      </div>
+      <div class="hero__card">
+        <div class="card">
+          <p class="card__eyebrow">Ugentlig status</p>
+          <h3>Transparens i hvert sprint</h3>
+          <ul class="card__list">
+            <li><strong>Design</strong> &mdash; Interaktive Figma-prototyper</li>
+            <li><strong>Udvikling</strong> &mdash; CI/CD med automatiske builds</li>
+            <li><strong>Drift</strong> &mdash; Monitorering og incident-respons</li>
+          </ul>
+          <div class="card__cta">Næste ledige sprint: <strong>3. juni</strong></div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section" id="services">
+      <div class="container">
+        <div class="section__header">
+          <p class="eyebrow">Services</p>
+          <h2>Vi bygger produkter, ikke bare features</h2>
+          <p class="section__lede">
+            Fra idésparring til release: vores tværfaglige team sørger for, at UX, teknologi og forretning hænger sammen.
+          </p>
+        </div>
+        <div class="grid grid--3">
+          <article class="tile">
+            <h3>Produktstrategi</h3>
+            <p>Workshops, roadmap og KPI-definition, så vi bygger det, brugerne faktisk mangler.</p>
+            <ul>
+              <li>Discovery &amp; design sprints</li>
+              <li>Tech-arkitektur &amp; valg af stack</li>
+              <li>Brugerrejser &amp; eksperimenter</li>
+            </ul>
+          </article>
+          <article class="tile">
+            <h3>Udvikling</h3>
+            <p>Native eller cross-platform – vi leverer stabile builds med løbende QA og automatiske tests.</p>
+            <ul>
+              <li>CI/CD pipelines &amp; release trains</li>
+              <li>Automatiseret test og crashlytics</li>
+              <li>Ydelsesoptimering og analytics</li>
+            </ul>
+          </article>
+          <article class="tile">
+            <h3>Drift &amp; vækst</h3>
+            <p>Fra lanceringsstøtte til løbende produktforbedringer baseret på data og feedback.</p>
+            <ul>
+              <li>On-call support og SLO'er</li>
+              <li>Feature flags og A/B tests</li>
+              <li>Eksperimenter der driver retention</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--highlight">
+      <div class="container highlight">
+        <div>
+          <p class="eyebrow">Proces</p>
+          <h2>Samarbejde med tempo og kvalitet</h2>
+          <p class="section__lede">Strukturerede sprints, tydelig rapportering og et team, der tager ansvar.</p>
+          <div class="steps">
+            <div class="step">
+              <div class="step__number">01</div>
+              <div>
+                <h3>Kickoff &amp; alignment</h3>
+                <p>Vi afklarer mål, succeskriterier og tech-krav, så alle arbejder mod samme resultat.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step__number">02</div>
+              <div>
+                <h3>Design &amp; build</h3>
+                <p>UX/UI, udvikling og QA i korte iterationer med demoer efter hvert sprint.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step__number">03</div>
+              <div>
+                <h3>Launch &amp; scale</h3>
+                <p>Release til App Store og Google Play, overvågning og løbende optimering.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="highlight__card card">
+          <p class="card__eyebrow">Teknologi</p>
+          <h3>Firebase som backbone</h3>
+          <p>Autentifikation, hosting, functions og realtime database, så vi kan fokusere på brugeroplevelsen.</p>
+          <ul class="pill-list">
+            <li>Firebase Hosting &amp; Cloud Functions</li>
+            <li>App Distribution &amp; Remote Config</li>
+            <li>Crashlytics &amp; Performance Monitoring</li>
+          </ul>
+          <div class="card__cta">Opsætning klar til CI/CD med GitHub Actions.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="portfolio">
+      <div class="container">
+        <div class="section__header">
+          <p class="eyebrow">Cases</p>
+          <h2>Projekter der har flyttet forretning</h2>
+          <p class="section__lede">Udvalgte apps vi har leveret i partnerskab med vores kunder.</p>
+        </div>
+        <div class="grid grid--3">
+          <article class="tile tile--case">
+            <div class="tag">Fintech</div>
+            <h3>NordicPay</h3>
+            <p>Skalerbar mobilbank med biometrisk login, kortstyring og realtidsnotifikationer.</p>
+          </article>
+          <article class="tile tile--case">
+            <div class="tag">SaaS</div>
+            <h3>FlowOps</h3>
+            <p>Field service platform med offline-first arkitektur og synkronisering via Firestore.</p>
+          </article>
+          <article class="tile tile--case">
+            <div class="tag">Health</div>
+            <h3>Pulse</h3>
+            <p>Patient-app med secure messaging, medicinpåmindelser og integration til wearables.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--cta" id="contact">
+      <div class="container cta">
+        <div>
+          <p class="eyebrow">Samarbejd med os</p>
+          <h2>Klar til at bygge næste version af din app?</h2>
+          <p class="section__lede">Book et møde, så sætter vi et team og en plan for de første 4 uger.</p>
+        </div>
+        <a class="btn btn--primary" href="mailto:hello@appetized.com">hello@appetized.com</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__content">
+      <div>
+        <p class="eyebrow">Appetized</p>
+        <p>App-udviklingspartner i København. Vi leverer komplette produktteams, der kan designe, bygge og drifte.</p>
+      </div>
+      <div class="footer__links">
+        <a href="#services">Services</a>
+        <a href="#portfolio">Cases</a>
+        <a href="#contact">Kontakt</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
