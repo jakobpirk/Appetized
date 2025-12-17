@@ -11,20 +11,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Validate Firebase configuration
-        env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-          PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID || '' }}
-        run: |
-          if [ -z "$FIREBASE_TOKEN" ]; then
-            echo "::error::Missing FIREBASE_TOKEN secret. Generate one with 'firebase login:ci' and add it to the repository secrets."
-            exit 1
-          fi
-
-          if [ -z "$PROJECT_ID" ] && [ ! -f .firebaserc ]; then
-            echo "::warning::No Firebase project configured. Set FIREBASE_PROJECT_ID secret or add .firebaserc to the repository."
-          fi
-
       - name: Install Firebase CLI
         run: |
           curl -sL https://firebase.tools | bash
