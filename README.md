@@ -4,9 +4,9 @@ Marketing site til app-udviklingsbureauet Appetized med automatisk deploy til Fi
 
 ## Firebase opsætning
 1. Opret et Firebase-projekt og aktiver Hosting.
-2. Opdater `.firebaserc` med dit projekt-id (`your-firebase-project-id`).
-3. Generér et CI token: `firebase login:ci` og tilføj det som GitHub secret `FIREBASE_TOKEN`.
-4. (Valgfrit) Tilføj `FIREBASE_PROJECT_ID` secret, hvis du ikke vil committe projekt-id i `.firebaserc`.
+2. Opdater `.firebaserc` med dit projekt-id (`your-firebase-project-id`) for lokal udvikling.
+3. Tilføj GitHub secret `FIREBASE_PROJECT_ID` med samme projekt-id; workflowet stopper med en fejl, hvis den ikke er sat.
+4. Generér et CI token: `firebase login:ci` og tilføj det som GitHub secret `FIREBASE_TOKEN`.
 5. Ved push til `main` deployer workflowet automatisk til Firebase Hosting.
 
 ## Lokal udviklings
