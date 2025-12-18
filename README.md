@@ -1,17 +1,18 @@
 # Appetized
 
-Marketing site til app-udviklingsbureauet Appetized med automatisk deploy til Firebase Hosting via GitHub Actions.
+Laravel-backend med Vue-frontend til at administrere og vise en menukort-API.
 
-## Firebase opsætning
-1. Opret et Firebase-projekt og aktiver Hosting.
-2. Opdater `.firebaserc` med dit projekt-id (`your-firebase-project-id`) for lokal udvikling.
-3. Tilføj GitHub secret `FIREBASE_PROJECT_ID` med samme projekt-id; workflowet stopper med en fejl, hvis den ikke er sat.
-4. Generér et CI token: `firebase login:ci` og tilføj det som GitHub secret `FIREBASE_TOKEN`.
-5. Ved push til `main` deployer workflowet automatisk til Firebase Hosting.
+- REST API til menu-poster på `/api/menu-items` (CRUD).
+- Adminpanel på `/admin` med formular til oprettelse, redigering og sletning.
+- Offentlig forside, der læser data fra API'et.
 
-## Lokal udviklings
-```bash
-# start en simpel server
-python -m http.server 3000 --directory public
-```
-Besøg `http://localhost:3000` for at se siden.
+## Kom i gang
+1. Kopiér miljøfil: `cp .env.example .env`.
+2. Installer PHP-afhængigheder: `composer install`.
+3. Installer frontend-afhængigheder: `npm install`.
+4. Kør migreringer (SQLite er forudopsat): `php artisan migrate`.
+5. Start udvikling: `npm run dev` og `php artisan serve`.
+
+## Tests
+- Backend: `php artisan test`
+- Byg assets: `npm run build`
