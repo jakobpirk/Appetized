@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ config('app.name') }}</title>
     @php
-        $viteAssetsPresent = file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot'));
+        $viteAssetsPresent = file_exists(public_path('build/manifest.json')) ||
+            file_exists(public_path('hot')) ||
+            file_exists(storage_path('framework/vite.hot'));
     @endphp
 
     @if ($viteAssetsPresent)
