@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="da">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Appetized</title>
+        <link rel="stylesheet" href="/build/assets/app-BtMag77m.css" />
+    </head>
+    <body class="min-h-screen bg-slate-50 text-slate-900">
+        <div id="app">
+            <noscript>Aktivér JavaScript for at bruge siden.</noscript>
+        </div>
+        <script>
+            const root = document.getElementById('app');
+            if (root) {
+                root.dataset.view = window.location.pathname.startsWith('/admin') ? 'admin' : 'frontend';
+            }
+        </script>
+        <script type="module" src="/build/assets/app-DoC9BWYd.js"></script>
+    </body>
+</html>
