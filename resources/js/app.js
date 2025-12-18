@@ -1,81 +1,114 @@
 import './bootstrap';
-import { createApp } from 'vue';
-import AdminPanel from './components/AdminPanel.vue';
-import PublicSite from './components/PublicSite.vue';
+import '../css/app.css';
 
-const root = document.getElementById('app');
+const formatPrice = (price) => {
+    const value = Number(price ?? 0);
+    return new Intl.NumberFormat('da-DK', { style: 'currency', currency: 'DKK' }).format(value);
+};
 
-if (root) {
-    try {
-        const view =
-            root.dataset.view || (window.location.pathname.startsWith('/admin') ? 'admin' : 'frontend');
-        const AppComponent = view === 'admin' ? AdminPanel : PublicSite;
+const renderMenuItems = (items) => {
+    const listContainers = document.querySelectorAll('[data-menu-list]');
+    const gridContainers = document.querySelectorAll('[data-menu-grid]');
 
-        // Gem fallback indhold hvis det eksisterer
-        const fallbackContent = root.innerHTML;
-        
-        // Mount Vue app - dette erstatter indholdet i root
-        const app = createApp(AppComponent);
-        
-        // Tilføj error handler til Vue app
-        app.config.errorHandler = (err, instance, info) => {
-            console.error('Vue fejl:', err, info);
-            // Vis fejlbesked hvis Vue fejler
-            if (root && !root.querySelector('.vue-error-message')) {
-                root.innerHTML = `
-                    <div class="mx-auto max-w-5xl p-6">
-                        <div class="vue-error-message rounded-lg border border-red-200 bg-red-50 p-4 text-red-800">
-                            <h2 class="font-semibold">Der opstod en fejl ved indlæsning af applikationen</h2>
-                            <p class="mt-2 text-sm">${fallbackContent || 'Prøv at genindlæse siden.'}</p>
-                        </div>
-                    </div>
-                `;
-            }
-        };
-        
-        app.mount(root);
-        
-        // Verificer at Vue faktisk har mounted og vist indhold
-        setTimeout(() => {
-            if (root && (!root.innerHTML.trim() || root.innerHTML.trim().length < 50)) {
-                console.warn('Vue mountede, men indholdet ser tomt ud. Viser fallback.');
-                root.innerHTML = fallbackContent || `
-                    <div class="mx-auto max-w-5xl p-6">
-                        <h1 class="text-2xl font-semibold">Bestil lækker mad hurtigt</h1>
-                        <p class="mt-4 text-slate-700">Frontend indlæses… hvis du ikke ser menuen, mangler JavaScript eller assets.</p>
-                    </div>
-                `;
-            }
-        }, 1000);
-        
-    } catch (error) {
-        console.error('Fejl ved indlæsning af Vue app:', error);
-        // Sørg for at statisk indhold stadig vises hvis Vue fejler
-        const fallbackContent = root.innerHTML || `
-            <div class="mx-auto max-w-5xl p-6">
-                <h1 class="text-2xl font-semibold">Bestil lækker mad hurtigt</h1>
-                <p class="mt-4 text-red-600">Der opstod en fejl ved indlæsning af applikationen.</p>
-                <p class="mt-2 text-sm text-slate-600">Prøv at genindlæse siden eller kontakt support.</p>
-            </div>
-        `;
-        
-        if (!root.innerHTML.trim() || root.innerHTML.trim().length < 50) {
-            root.innerHTML = fallbackContent;
+    listContainers.forEach((container) => {
+        container.innerHTML = '';
+        if (!items.length) {
+            container.innerHTML = '<p class="text-sm text-slate-600">Ingen retter er oprettet endnu.</p>';
+            return;
         }
+
+        items.forEach((item) => {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'flex items-start justify-between rounded-xl border border-slate-200 bg-white px-4 py-3 shadow-sm';
+            wrapper.innerHTML = `
+                <div>
+                    <p class="text-base font-semibold text-slate-900">${item.name}</p>
+                    <p class="text-sm text-slate-600">${item.description ?? 'Ingen beskrivelse endnu'}</p>
+                </div>
+                <div class="flex items-center gap-2 text-right">
+                    <span class="rounded-full bg-${item.available ? 'emerald' : 'slate'}-100 px-3 py-1 text-xs font-semibold text-${item.available ? 'emerald' : 'slate'}-800">${item.available ? 'Aktiv' : 'Skjult'}</span>
+                    <span class="text-base font-semibold text-slate-900">${formatPrice(item.price)}</span>
+                </div>`;
+            container.appendChild(wrapper);
+        });
+    });
+
+    gridContainers.forEach((grid) => {
+        grid.innerHTML = '';
+        if (!items.length) {
+            grid.innerHTML = '<div class="rounded-xl border border-dashed border-slate-200 bg-white p-4 text-sm text-slate-500">Tilføj den første ret fra admin.</div>';
+            return;
+        }
+        items.forEach((item) => {
+            const card = document.createElement('article');
+            card.className = 'rounded-xl border border-slate-200 bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md';
+            card.innerHTML = `
+                <div class="flex items-center justify-between">
+                    <h3 class="text-lg font-semibold text-slate-900">${item.name}</h3>
+                    <span class="rounded-full bg-${item.available ? 'emerald' : 'slate'}-100 px-3 py-1 text-xs font-semibold text-${item.available ? 'emerald' : 'slate'}-800">${item.available ? 'Tilgængelig' : 'Ikke tilgængelig'}</span>
+                </div>
+                <p class="mt-2 text-sm text-slate-600">${item.description ?? 'Ingen beskrivelse tilføjet endnu.'}</p>
+                <p class="mt-4 text-base font-semibold text-slate-900">${formatPrice(item.price)}</p>
+            `;
+            grid.appendChild(card);
+        });
+    });
+};
+
+const fetchMenuItems = async () => {
+    try {
+        const { data } = await window.axios.get('/api/menu-items');
+        renderMenuItems(data);
+    } catch (error) {
+        console.error('Kunne ikke hente menu', error);
+        document.querySelectorAll('[data-menu-list]').forEach((container) => {
+            container.innerHTML = '<p class="text-sm text-red-600">Fejl ved indlæsning af menuen.</p>';
+        });
     }
-} else {
-    console.error('Kunne ikke finde #app element');
-    // Opret app element hvis det ikke findes
-    const body = document.body;
-    if (body) {
-        const appDiv = document.createElement('div');
-        appDiv.id = 'app';
-        appDiv.innerHTML = `
-            <div class="mx-auto max-w-5xl p-6">
-                <h1 class="text-2xl font-semibold">Bestil lækker mad hurtigt</h1>
-                <p class="mt-4 text-red-600">App container mangler. Kontroller HTML strukturen.</p>
-            </div>
-        `;
-        body.appendChild(appDiv);
-    }
-}
+};
+
+const setupForm = () => {
+    const form = document.querySelector('[data-menu-form]');
+    if (!form) return;
+
+    const status = form.querySelector('[data-form-status]');
+    const refreshButton = document.querySelector('[data-refresh]');
+
+    const setStatus = (message, variant = 'muted') => {
+        const styles = {
+            muted: 'text-slate-500',
+            success: 'text-emerald-700',
+            error: 'text-red-600',
+        };
+        status.textContent = message;
+        status.className = `text-sm ${styles[variant] ?? styles.muted}`;
+    };
+
+    form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const formData = new FormData(form);
+        const payload = {
+            name: formData.get('name'),
+            description: formData.get('description'),
+            price: formData.get('price'),
+            available: formData.get('available') === 'on',
+        };
+
+        try {
+            await window.axios.post('/api/menu-items', payload);
+            form.reset();
+            setStatus('Retten blev gemt.', 'success');
+            await fetchMenuItems();
+        } catch (error) {
+            console.error('Gem fejlede', error);
+            setStatus('Kunne ikke gemme retten.', 'error');
+        }
+    });
+
+    refreshButton?.addEventListener('click', fetchMenuItems);
+};
+
+window.addEventListener('DOMContentLoaded', () => {
+    fetchMenuItems();
+    setupForm();
+});

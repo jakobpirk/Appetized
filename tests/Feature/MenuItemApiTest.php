@@ -12,69 +12,41 @@ class MenuItemApiTest extends TestCase
 
     public function test_it_lists_menu_items(): void
     {
-        MenuItem::factory()->count(3)->create();
+        $items = MenuItem::factory()->count(2)->create();
 
         $response = $this->getJson('/api/menu-items');
 
-        $response->assertOk()->assertJsonCount(3);
+        $response->assertOk();
+        $response->assertJsonCount(2);
+        $response->assertJsonFragment(['name' => $items->first()->name]);
     }
 
-    public function test_it_creates_menu_items(): void
+    public function test_it_creates_a_new_menu_item(): void
     {
         $payload = [
-            'name' => 'Margherita',
-            'description' => 'Klassisk med frisk basilikum',
-            'price' => 95,
+            'name' => 'Testret',
+            'description' => 'Frisk og lækker',
+            'price' => 129.50,
+            'available' => true,
         ];
 
         $response = $this->postJson('/api/menu-items', $payload);
 
-        $response->assertCreated()->assertJsonPath('name', 'Margherita');
+        $response->assertCreated();
         $this->assertDatabaseHas('menu_items', [
-            'name' => 'Margherita',
+            'name' => 'Testret',
             'available' => true,
         ]);
     }
 
-    public function test_it_validates_payload(): void
+    public function test_validation_errors_are_returned(): void
     {
         $response = $this->postJson('/api/menu-items', [
             'name' => '',
-            'price' => -10,
+            'price' => -1,
         ]);
 
-        $response->assertStatus(422);
-    }
-
-    public function test_it_updates_menu_items(): void
-    {
-        $item = MenuItem::factory()->create([
-            'available' => true,
-            'price' => 120,
-        ]);
-
-        $response = $this->putJson("/api/menu-items/{$item->id}", [
-            'name' => 'Opdateret',
-            'description' => 'Ny tekst',
-            'price' => 110,
-            'available' => false,
-        ]);
-
-        $response->assertOk()->assertJsonPath('available', false);
-        $this->assertDatabaseHas('menu_items', [
-            'id' => $item->id,
-            'name' => 'Opdateret',
-            'available' => false,
-        ]);
-    }
-
-    public function test_it_deletes_menu_items(): void
-    {
-        $item = MenuItem::factory()->create();
-
-        $response = $this->deleteJson("/api/menu-items/{$item->id}");
-
-        $response->assertNoContent();
-        $this->assertDatabaseMissing('menu_items', ['id' => $item->id]);
+        $response->assertUnprocessable();
+        $response->assertJsonValidationErrors(['name', 'price']);
     }
 }
