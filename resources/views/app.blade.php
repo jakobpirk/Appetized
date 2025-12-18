@@ -15,18 +15,27 @@
     @endif
 </head>
 <body class="min-h-screen bg-slate-50 text-slate-900">
-    <div id="app" data-view="{{ $view }}">
-        <noscript>Aktivér JavaScript for at bruge siden.</noscript>
+    <div id="app" data-view="{{ $view }}" style="min-height: 100vh;">
+        <noscript>
+            <div style="padding: 2rem; max-width: 1200px; margin: 0 auto;">
+                <h1 style="font-size: 1.875rem; font-weight: 600; color: #0f172a; margin-bottom: 1rem;">Bestil lækker mad hurtigt</h1>
+                <p style="color: #475569;">Aktivér JavaScript for at bruge siden.</p>
+            </div>
+        </noscript>
 
-        <section class="mx-auto max-w-5xl space-y-6 p-6" aria-live="polite">
+        <section class="mx-auto max-w-5xl space-y-6 p-6" aria-live="polite" style="max-width: 1280px; margin: 0 auto; padding: 1.5rem; min-height: 100vh;">
             @if ($view === 'frontend')
-                <div class="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
-                    <div class="mb-4 flex items-center gap-3">
-                        <h1 class="text-2xl font-semibold">Bestil lækker mad hurtigt</h1>
-                        <span class="rounded-full bg-emerald-50 px-3 py-1 text-sm font-semibold text-emerald-700">Appetized</span>
+                <div class="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200" style="background-color: white; padding: 1.5rem; border-radius: 1rem; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);">
+                    <div class="mb-4 flex items-center gap-3" style="margin-bottom: 1rem; display: flex; align-items: center; gap: 0.75rem;">
+                        <h1 class="text-2xl font-semibold" style="font-size: 1.5rem; font-weight: 600; color: #0f172a; margin: 0;">Bestil lækker mad hurtigt</h1>
+                        <span class="rounded-full bg-emerald-50 px-3 py-1 text-sm font-semibold text-emerald-700" style="background-color: #ecfdf5; color: #065f46; padding: 0.25rem 0.75rem; border-radius: 9999px; font-weight: 600; font-size: 0.875rem;">Appetized</span>
                     </div>
-                    <p class="text-slate-700">Frontend indlæses… hvis du ikke ser menuen, mangler JavaScript eller assets.</p>
-                    <ul class="mt-3 list-disc pl-5 text-sm text-slate-600">
+                    <p class="text-slate-700" style="color: #334155; margin-bottom: 0.75rem;">Frontend indlæses… hvis du ikke ser menuen, mangler JavaScript eller assets.</p>
+                    <div class="mt-4 rounded-lg bg-slate-50 p-4" style="margin-top: 1rem; background-color: #f8fafc; padding: 1rem; border-radius: 0.5rem;">
+                        <h2 style="font-weight: 600; color: #0f172a; margin-bottom: 0.5rem;">Menu</h2>
+                        <p style="color: #64748b; font-size: 0.875rem;">Henter menu fra API...</p>
+                    </div>
+                    <ul class="mt-3 list-disc pl-5 text-sm text-slate-600" style="margin-top: 0.75rem; padding-left: 1.25rem; font-size: 0.875rem; color: #475569;">
                         <li>Menukortet vises automatisk, når Vue er bundet til siden.</li>
                         <li>Du kan altid genindlæse for at prøve igen.</li>
                     </ul>
