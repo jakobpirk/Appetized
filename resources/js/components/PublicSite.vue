@@ -18,10 +18,12 @@ async function loadItems() {
 
     try {
         const { data } = await axios.get('/api/menu-items');
-        items.value = data;
+        // Sørg for at data er et array
+        items.value = Array.isArray(data) ? data : [];
     } catch (err) {
         error.value = 'Kunne ikke hente menuen lige nu.';
-        console.error(err);
+        console.error('Fejl ved hentning af menu items:', err);
+        items.value = [];
     } finally {
         loading.value = false;
     }
